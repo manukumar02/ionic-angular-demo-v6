@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,10 @@ export class HomePage {
     { name: 'Bob', email: 'bob32@gmail.com' },
     { name: 'Jai', email: 'jai87@gmail.com' },
   ];
-  constructor(public actionSheetCtrl: ActionSheetController) {}
+  constructor(
+    private actionSheetCtrl: ActionSheetController,
+    private modalCtrl: ModalController
+  ) {}
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
@@ -48,5 +52,18 @@ export class HomePage {
     });
 
     actionSheet.present();
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        firstName: 'Douglas',
+        lastName: 'Adams',
+        middleInitial: 'N',
+      },
+    });
+    return await modal.present();
   }
 }
